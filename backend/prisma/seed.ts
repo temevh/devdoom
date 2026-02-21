@@ -1,4 +1,4 @@
-import { PrismaClient, Source } from '../generated/prisma';
+import { PrismaClient, Source } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { Pool } from 'pg';
 
@@ -10,7 +10,7 @@ const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  console.log('🌱 Cleaning database...');
+  console.log('🧼 Cleaning database...');
   // Optional: Clears existing posts so you don't get unique constraint errors
   await prisma.post.deleteMany();
 
