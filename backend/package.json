@@ -21,7 +21,7 @@
     "db:generate": "npx prisma generate",
     "db:migrate": "npx prisma migrate dev",
     "db:seed": "npx prisma db seed",
-    "db:studio": "npx prisma studio --browser none",
+    "db:studio": "npx prisma studio --port 5555 --browser none",
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down",
     "container:migrate": "docker exec -it monorepo-dc-backend-1 npm run db:migrate",
