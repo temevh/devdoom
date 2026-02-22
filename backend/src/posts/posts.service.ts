@@ -23,10 +23,9 @@ export class PostsService {
       return JSON.parse(cachedPosts);
     }
 
+    const whereClause = tag ? { tags: { hasSome: [tag] } } : {};
     const posts = await this.prisma.post.findMany({
-      where: {
-        tags: tag ? { hasSome: [tag] } : {},
-      },
+      where: whereClause,
       orderBy: { createdAt: 'desc' },
     });
 

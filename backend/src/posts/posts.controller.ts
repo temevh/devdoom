@@ -22,13 +22,8 @@ export class PostsController {
   }
 
   @Get()
-  findAll(@Query('tag') tag:string) {
+  findAll(@Query('tag') tag?: string) {
     return this.postsService.findAll(tag);
-  }
-
-  @Get(':tag')
-  findByTag(@Param('tag') tag: string) {
-    return this.postsService.findByTag(tag);
   }
 
   @Patch(':id')
