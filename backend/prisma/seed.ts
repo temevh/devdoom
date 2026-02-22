@@ -17,6 +17,7 @@ async function main() {
   console.log('🌱 Seeding database...');
 
   const mockPosts = [
+    // --- ORIGINAL POSTS ---
     {
       title: 'Mastering NestJS Dependency Injection',
       url: 'https://reddit.com/r/nestjs/comments/1',
@@ -32,8 +33,8 @@ async function main() {
     {
       title: 'Why I switched from TypeORM to Prisma',
       url: 'https://medium.com/engineering/prisma-vs-typeorm',
-      source: Source.medium, // Note: You currently only have 'reddit' in your Enum
-      tags: ['database', 'prisma', 'node'],
+      source: Source.medium,
+      tags: ['database', 'prisma', 'node', 'react'],
     },
     {
       title: 'Understanding Docker Networking',
@@ -52,6 +53,100 @@ async function main() {
       url: 'https://reddit.com/r/backend/comments/5',
       source: Source.reddit,
       tags: ['backend', 'redis', 'performance'],
+    },
+
+    // --- NEW PRODUCTIVITY & CAREER DATA ---
+    {
+      title: 'Deep Work: How to focus in a world of Slack',
+      url: 'https://medium.com/productivity/deep-work-slack',
+      source: Source.medium,
+      tags: ['productivity', 'focus', 'soft-skills'],
+    },
+    {
+      title: 'The Senior Engineer Guide to System Design',
+      url: 'https://reddit.com/r/softwareengineering/comments/6',
+      source: Source.reddit,
+      tags: ['architecture', 'career', 'backend'],
+    },
+    {
+      title: 'How to handle burnout as a developer',
+      url: 'https://medium.com/wellness/dev-burnout',
+      source: Source.medium,
+      tags: ['productivity', 'career', 'health'],
+    },
+
+    // --- AI & FUTURE TECH ---
+    {
+      title: 'Building LLM Apps with LangChain and NestJS',
+      url: 'https://reddit.com/r/nestjs/comments/7',
+      source: Source.reddit,
+      tags: ['ai', 'nestjs', 'backend'],
+    },
+    {
+      title: 'The Future of AI Coding Assistants',
+      url: 'https://medium.com/ai/coding-assistants-2026',
+      source: Source.medium,
+      tags: ['ai', 'productivity', 'tools'],
+    },
+
+    // --- CLOUD & DEVOPS ---
+    {
+      title: 'Kubernetes for People in a Hurry',
+      url: 'https://reddit.com/r/devops/comments/8',
+      source: Source.reddit,
+      tags: ['devops', 'kubernetes', 'cloud'],
+    },
+    {
+      title: 'AWS Lambda vs Google Cloud Functions in 2026',
+      url: 'https://medium.com/cloud/serverless-battle',
+      source: Source.medium,
+      tags: ['cloud', 'serverless', 'backend'],
+    },
+    {
+      title: 'Terraform Best Practices for Small Teams',
+      url: 'https://reddit.com/r/terraform/comments/9',
+      source: Source.reddit,
+      tags: ['devops', 'infrastructure', 'automation'],
+    },
+
+    // --- FRONTEND & UI/UX ---
+    {
+      title: 'Tailwind CSS: Is it still the king?',
+      url: 'https://reddit.com/r/frontend/comments/10',
+      source: Source.reddit,
+      tags: ['frontend', 'css', 'ui'],
+    },
+    {
+      title: 'React Server Components: The Good and The Bad',
+      url: 'https://medium.com/react/rsc-truth',
+      source: Source.medium,
+      tags: ['frontend', 'react', 'javascript'],
+    },
+    {
+      title: 'Why you should use Vitest over Jest',
+      url: 'https://reddit.com/r/javascript/comments/11',
+      source: Source.reddit,
+      tags: ['frontend', 'testing', 'javascript'],
+    },
+
+    // --- RANDOM TECH INTERESTS ---
+    {
+      title: 'Rust for Node.js Developers',
+      url: 'https://medium.com/rust/node-to-rust',
+      source: Source.medium,
+      tags: ['rust', 'backend', 'performance'],
+    },
+    {
+      title: 'The State of GraphQL in 2026',
+      url: 'https://reddit.com/r/graphql/comments/12',
+      source: Source.reddit,
+      tags: ['backend', 'graphql', 'api'],
+    },
+    {
+      title: 'Postgres vs Mongo: The final showdown',
+      url: 'https://medium.com/databases/sql-vs-nosql',
+      source: Source.medium,
+      tags: ['database', 'backend', 'productivity'],
     },
   ];
 
