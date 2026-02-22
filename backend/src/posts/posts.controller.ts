@@ -22,8 +22,14 @@ export class PostsController {
   }
 
   @Get()
-  findAll(@Query('tag') tag?: string) {
-    return this.postsService.findAll(tag);
+  async getPosts(
+    @Query('tags') tags?: string[],
+    @Query('source') source?: string,
+  ) {
+    if (source === 'react') {
+      return this.postsService.getReddit(source);
+    }
+    return this.postsService.find(tags);
   }
 
   @Patch(':id')

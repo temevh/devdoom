@@ -3,9 +3,10 @@ import { PostsService } from './posts.service';
 import { PostsController } from './posts.controller';
 import { PrismaModule } from 'prisma/prisma.module';
 import { RedisModule } from 'redis/redis.module';
+import { RedditModule } from 'src/scrapers/reddit/reddit.module';
 
 @Module({
-  imports: [PrismaModule, RedisModule],
+  imports: [PrismaModule, RedisModule, RedditModule],
   controllers: [PostsController],
   providers: [PostsService],
 })
