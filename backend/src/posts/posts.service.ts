@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePostDto } from './dto/create-post.dto';
-import { UpdatePostDto } from './dto/update-post.dto';
 import { PrismaService } from 'prisma/prisma.service';
 import { RedisService } from 'redis/redis.service';
-import { RedditService } from 'src/scrapers/reddit/reddit.service';
+import { RedditService } from 'src/reddit/reddit.service';
 
 @Injectable()
 export class PostsService {
@@ -12,7 +10,7 @@ export class PostsService {
     private redis: RedisService,
     private reddit: RedditService,
   ) {}
-  create(createPostDto: CreatePostDto) {
+  create() {
     return 'This action adds a new post';
   }
 
@@ -22,12 +20,10 @@ export class PostsService {
   }
 
   async find(tags: string[] = []) {
-    // 1. Sanitize: Remove empty strings and standardize casing
     const cleanTags = tags
       .map((t) => t.trim().toLowerCase())
       .filter((t) => t.length > 0);
 
-    // 2. Consistent Cache Key: Sort tags so [A, B] and [B, A] share a cache
     const cacheKey =
       cleanTags.length > 0
         ? `posts_tags:${cleanTags.sort().join(',')}`
@@ -58,7 +54,7 @@ export class PostsService {
     return `This action returns a #${id} post`;
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
+  update(id: number) {
     return `This action updates a #${id} post`;
   }
 
