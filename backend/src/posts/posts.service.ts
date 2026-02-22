@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PrismaService } from 'prisma/prisma.service';
+
 @Injectable()
 export class PostsService {
   constructor(private prisma: PrismaService) {}
@@ -12,15 +13,15 @@ export class PostsService {
   async findAll(tag?: string) {
     return this.prisma.post.findMany({
       where: {
-        tags: tag 
-          ? { hasSome: [tag] } 
-          : {},              
+        tags: tag ? { hasSome: [tag] } : {},
       },
       orderBy: { createdAt: 'desc' },
     });
   }
-  findByTag(tag: string){
-    return this.prisma.post.findMany({where: {tags: tag ? {hasSome: [tag]} : {},}})
+  findByTag(tag: string) {
+    return this.prisma.post.findMany({
+      where: { tags: tag ? { hasSome: [tag] } : {} },
+    });
   }
 
   findOne(id: number) {
