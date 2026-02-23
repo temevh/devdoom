@@ -20,7 +20,7 @@ model Post {
   id        Int      @id @default(autoincrement())
   title     String
   source    Source
-  url       String
+  url       String   @unique
   tags      String[]
   createdAt DateTime @default(now())
 }
