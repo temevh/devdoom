@@ -35,11 +35,8 @@ export class PostsService {
       return JSON.parse(cachedPosts);
     }
 
-    // 3. Dynamic Where Clause
     const whereClause =
-      cleanTags.length > 0
-        ? { tags: { hasEvery: cleanTags } } // Use 'hasEvery' for AND, 'hasSome' for OR logic
-        : {};
+      cleanTags.length > 0 ? { tags: { hasEvery: cleanTags } } : {};
 
     const posts = await this.prisma.post.findMany({
       where: whereClause,

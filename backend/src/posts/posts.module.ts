@@ -9,5 +9,6 @@ import { RedditModule } from 'src/reddit/reddit.module';
   imports: [PrismaModule, RedisModule, RedditModule],
   controllers: [PostsController],
   providers: [PostsService],
+  exports: [PostsService],
 })
 export class PostsModule {}

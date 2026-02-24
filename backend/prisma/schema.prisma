@@ -29,3 +29,15 @@ enum Source {
   reddit
   medium
 }
+
+model User {
+  id     Int      @id @default(autoincrement())
+  email  String   @unique
+  topics Topics[]
+}
+
+enum Topics {
+  ai
+  coding
+  productivity
+}
