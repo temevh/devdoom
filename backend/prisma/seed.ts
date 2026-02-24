@@ -159,7 +159,7 @@ async function main() {
 
   const mockUser = {
     email: 'tester@test.mail',
-    topics: [Topics.ai, Topics.coding, Topics.productivity],
+    topics: [Topics.productivity],
   };
 
   const user = await prisma.user.upsert({

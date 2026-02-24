@@ -3,6 +3,7 @@ import { PrismaService } from 'prisma/prisma.service';
 import { RedisService } from 'redis/redis.service';
 import { RedditService } from 'src/reddit/reddit.service';
 import { UserService } from 'src/user/user.service';
+import { User, Post } from '@prisma/client';
 
 @Injectable()
 export class PostsService {
@@ -47,8 +48,35 @@ export class PostsService {
   }
 
   async showUserPosts() {
-    const topics = this.userService.getUser();
-    console.log('Users topics:', topics);
-    return topics;
+    const user: User | null = await this.userService.getUser();
+    if (!user) {
+      console.log('User not found');
+      return [];
+    }
+
+    const posts: Post[] = [];
+    const getFromDb: string[] = [];
+
+    for (const topic of user.topics) {
+      const cacheKey = `posts_tag:${topic}`;
+      const cachedPosts = await this.redis.get(cacheKey);
+
+      if (cachedPosts) {
+        posts.push(...JSON.parse(cachedPosts));
+      } else {
+        getFromDb.push(topic);
+      }
+    }
+
+    if (getFromDb.length > 0) {
+      const dbPosts = await this.prisma.post.findMany({
+        where: { tags: { hasSome: getFromDb } },
+        orderBy: { createdAt: 'desc' },
+      });
+
+      posts.push(...dbPosts);
+    }
+
+    return posts;
   }
 }

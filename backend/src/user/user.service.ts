@@ -6,6 +6,8 @@ export class UserService {
   constructor(private prisma: PrismaService) {}
 
   async getUser() {
-    return await this.prisma.user.findFirst();
+    const user = await this.prisma.user.findFirst();
+    console.log('user', user);
+    return user;
   }
 }
