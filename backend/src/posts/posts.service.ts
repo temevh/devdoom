@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
 import { RedisService } from 'redis/redis.service';
 import { RedditService } from 'src/reddit/reddit.service';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class PostsService {
@@ -9,6 +10,7 @@ export class PostsService {
     private prisma: PrismaService,
     private redis: RedisService,
     private reddit: RedditService,
+    private userService: UserService,
   ) {}
 
   async getReddit(source: string | undefined) {
@@ -42,5 +44,11 @@ export class PostsService {
 
     await this.redis.set(cacheKey, JSON.stringify(posts), 1800);
     return posts;
+  }
+
+  async showUserPosts() {
+    const topics = this.userService.getUser();
+    console.log('Users topics:', topics);
+    return topics;
   }
 }

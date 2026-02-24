@@ -10,4 +10,9 @@ export class AppController {
     return this.postsService.find(tags);
     //return 'Test reload';
   }
+
+  @Get('/post')
+  async showPosts() {
+    return this.postsService.showUserPosts();
+  }
 }
