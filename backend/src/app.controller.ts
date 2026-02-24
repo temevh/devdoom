@@ -7,7 +7,7 @@ export class AppController {
 
   @Get()
   async getPosts(@Query('tags') tags?: string[]) {
-    //return this.postsService.find(tags);
-    return 'Test reload';
+    return this.postsService.find(tags);
+    //return 'Test reload';
   }
 }

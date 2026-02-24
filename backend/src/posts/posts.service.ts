@@ -10,9 +10,6 @@ export class PostsService {
     private redis: RedisService,
     private reddit: RedditService,
   ) {}
-  create() {
-    return 'This action adds a new post';
-  }
 
   async getReddit(source: string | undefined) {
     console.log('source', source);
@@ -45,17 +42,5 @@ export class PostsService {
 
     await this.redis.set(cacheKey, JSON.stringify(posts), 1800);
     return posts;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} post`;
-  }
-
-  update(id: number) {
-    return `This action updates a #${id} post`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} post`;
   }
 }
