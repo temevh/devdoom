@@ -1,10 +1,10 @@
-import { HttpService } from '@nestjs/axios';
-import { Injectable, Logger } from '@nestjs/common';
-import { RedisService } from 'redis/redis.service';
-import { PrismaService } from 'prisma/prisma.service';
-import { Source } from '@prisma/client';
-import { Cron } from '@nestjs/schedule';
-import * as subredditsJson from '../../subreddits.json';
+import { HttpService } from "@nestjs/axios";
+import { Injectable, Logger } from "@nestjs/common";
+import { RedisService } from "redis/redis.service";
+import { PrismaService } from "prisma/prisma.service";
+import { Source } from "@prisma/client";
+import { Cron } from "@nestjs/schedule";
+import * as subredditsJson from "../../subreddits.json";
 
 @Injectable()
 export class RedditService {
@@ -18,9 +18,9 @@ export class RedditService {
     private prisma: PrismaService,
   ) {}
 
-  @Cron('0 0 * * * *')
+  @Cron("0 0 * * * *")
   async syncReddit() {
-    this.logger.log('🚀 Starting Batched Reddit Sync...');
+    this.logger.log("🚀 Starting Batched Reddit Sync...");
 
     const allTasks = Object.entries(subredditsJson).flatMap(([tag, subs]) =>
       Array.isArray(subs) ? subs.map((name) => ({ name, tag })) : [],
@@ -50,7 +50,7 @@ export class RedditService {
         await this.sleep(WAIT_TIME);
       }
     }
-    this.logger.log('✅ All batches processed.');
+    this.logger.log("✅ All batches processed.");
   }
 
   async fetchSubreddit(sub: string, tag: string) {
@@ -58,14 +58,12 @@ export class RedditService {
     const cached = await this.redis.get(cacheKey);
 
     if (cached) {
-      console.log(`Serving ${sub} from cache`);
       return JSON.parse(cached);
     }
 
-    console.log(`Fetching ${sub} from reddit`);
     const response = await this.http.axiosRef.get(
       `https://www.reddit.com/r/${sub}/hot.json`,
-      { headers: { 'User-Agent': 'DoomDev-Aggregator/1.0' } },
+      { headers: { "User-Agent": "DoomDev-Aggregator/1.0" } },
     );
 
     const redditData = response.data.data.children.map(
@@ -75,7 +73,7 @@ export class RedditService {
       }),
     );
 
-    await Promise.all(
+    const results = await Promise.all(
       redditData.map((post: { title: string; url: string }) =>
         this.prisma.post.upsert({
           where: { url: post.url },
@@ -90,6 +88,9 @@ export class RedditService {
           },
         }),
       ),
+    );
+    this.logger.log(
+      `✅ [r/${sub}] Sync complete. Processed ${results.length} posts.`,
     );
 
     await this.redis.set(cacheKey, JSON.stringify(redditData), 3600);
