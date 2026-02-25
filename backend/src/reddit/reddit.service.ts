@@ -5,44 +5,6 @@ import { PrismaService } from 'prisma/prisma.service';
 import { Source } from '@prisma/client';
 import { Cron } from '@nestjs/schedule';
 
-const Topics = {
-  topics: [
-    {
-      tag: 'ai',
-      description: 'Artificial Intelligence, Machine Learning, and LLMs',
-      subreddits: [
-        'LocalLLaMA',
-        'MachineLearning',
-        'ArtificialInteligence',
-        'OpenAI',
-        'ClaudeAI',
-      ],
-    },
-    {
-      tag: 'productivity',
-      description: 'Tools, workflows, and developer efficiency',
-      subreddits: [
-        'productivity',
-        'workflowy',
-        'ObsidianMD',
-        'Raycast',
-        'NoteTaking',
-      ],
-    },
-    {
-      tag: 'coding',
-      description: 'General programming and framework specific news',
-      subreddits: [
-        'nestjs',
-        'reactjs',
-        'typescript',
-        'webdev',
-        'softwareengineering',
-      ],
-    },
-  ],
-};
-
 @Injectable()
 export class RedditService {
   constructor(

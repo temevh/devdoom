@@ -74,9 +74,23 @@ export class PostsService {
         orderBy: { createdAt: 'desc' },
       });
 
-      posts.push(...dbPosts);
+      await this.backFillCache(getFromDb, dbPosts);
     }
 
     return posts;
+  }
+
+  private async backFillCache(missingTags: string[], posts: Post[]) {
+    for (const tag of missingTags) {
+      const postsForTag = posts.filter((p) => p.tags.includes(tag));
+
+      if (postsForTag.length > 0) {
+        const cacheKey = `posts_tag:${tag}`;
+        console.log(`💾 Backfilling cache for tag: ${tag}`);
+
+        // Save to Redis for 30 minutes (1800s)
+        await this.redis.set(cacheKey, JSON.stringify(postsForTag), 1800);
+      }
+    }
   }
 }
