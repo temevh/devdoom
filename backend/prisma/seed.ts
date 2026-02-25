@@ -1,6 +1,6 @@
-import { PrismaClient, Source, Topics } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { Pool } from 'pg';
+import { PrismaClient, Source, Topics } from '@prisma/client';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });

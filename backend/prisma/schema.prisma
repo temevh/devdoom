@@ -28,6 +28,7 @@ model Post {
 enum Source {
   reddit
   medium
+  hackernews
 }
 
 model User {
