@@ -14,11 +14,6 @@ export class PostsService {
     private userService: UserService,
   ) {}
 
-  async getReddit(source: string | undefined) {
-    console.log('source', source);
-    return await this.reddit.fetchSubreddit('react');
-  }
-
   async find(tags: string[] = []) {
     const cleanTags = tags
       .map((t) => t.trim().toLowerCase())

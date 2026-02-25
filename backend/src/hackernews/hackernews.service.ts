@@ -4,7 +4,6 @@ import { Cron, CronExpression } from '@nestjs/schedule';
 import { Source } from '@prisma/client';
 import { PrismaService } from 'prisma/prisma.service';
 
-
 @Injectable()
 export class HackernewsService {
   private readonly logger = new Logger(HackernewsService.name);

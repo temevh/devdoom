@@ -1,0 +1,224 @@
+{
+  "php_ecosystem": [
+    "cakephp",
+    "laravel",
+    "learn_laravel",
+    "learnphp",
+    "php",
+    "phphelp",
+    "symfony"
+  ],
+  "python_ecosystem": [
+    "django",
+    "djangolearning",
+    "flask",
+    "learnpython",
+    "Python",
+    "pythoncoding"
+  ],
+  "ruby_ecosystem": [
+    "learn_rails",
+    "learnruby",
+    "learnrubyonrails",
+    "rails",
+    "ruby",
+    "rubyonrails"
+  ],
+  "javascript_frontend": [
+    "Angular2",
+    "angularjs",
+    "d3js",
+    "gatsbyjs",
+    "jquery",
+    "reactjs",
+    "vuejs"
+  ],
+  "javascript_runtime_and_meta": [
+    "javascript",
+    "LearnJavascript",
+    "Meteor",
+    "node",
+    "npm"
+  ],
+  "mobile_dev": [
+    "androiddesign",
+    "androiddev",
+    "androidthemes",
+    "applewatch",
+    "FlutterDev",
+    "iOSBeta",
+    "iOSProgramming",
+    "phonegap",
+    "reactnative",
+    "watchOSBeta",
+    "xamarindevelopers"
+  ],
+  "low_level_and_systems": [
+    "c_language",
+    "C_Programming",
+    "Cprog",
+    "cprogramming",
+    "cpp",
+    "cplusplus",
+    "rust",
+    "zig",
+    "vlang"
+  ],
+  "jvm_and_dotnet": [
+    "csharp",
+    "dotnet",
+    "groovy",
+    "java",
+    "javahelp",
+    "kotlin",
+    "learnjava",
+    "scala"
+  ],
+  "functional_and_niche_langs": [
+    "Clojure",
+    "dartlang",
+    "elixir",
+    "erlang",
+    "functionalprogramming",
+    "golang",
+    "hascalator",
+    "haskell",
+    "haskellquestions",
+    "haskelltil",
+    "Julia",
+    "lua",
+    "perl"
+  ],
+  "databases": [
+    "Database",
+    "DatabaseHelp",
+    "mariadb",
+    "mongodb",
+    "mysql",
+    "PostgreSQL",
+    "redis",
+    "rethinkdb",
+    "SQLServer"
+  ],
+  "devops_and_infrastructure": [
+    "aws",
+    "AZURE",
+    "docker",
+    "Firebase",
+    "Heroku",
+    "nginx",
+    "vagrant"
+  ],
+  "os_and_platforms": [
+    "Android",
+    "ios",
+    "linux",
+    "linux4noobs",
+    "linuxquestions",
+    "mac",
+    "macapps",
+    "MacSetups",
+    "osx",
+    "OSXTweaks",
+    "windows",
+    "windows8",
+    "Windows10",
+    "windowsinsiders"
+  ],
+  "terminal_and_shell": [
+    "bash",
+    "commandline",
+    "osxterminal",
+    "shell",
+    "zsh"
+  ],
+  "editors_and_tools": [
+    "dotfiles",
+    "emacs",
+    "git",
+    "github",
+    "neovim",
+    "vim",
+    "vscode"
+  ],
+  "data_science_and_ai": [
+    "artificial",
+    "computervision",
+    "dataisbeautiful",
+    "datascience",
+    "datasets",
+    "LanguageTechnology",
+    "machinelearning",
+    "MLQuestions"
+  ],
+  "cs_theory_and_career": [
+    "Algorithms",
+    "AskCompSci",
+    "AskComputerScience",
+    "compsci",
+    "computerscience",
+    "cscareerquestions",
+    "cscareerquestionsEU",
+    "cseducation"
+  ],
+  "web_design_and_ui": [
+    "css",
+    "csshelp",
+    "frontend",
+    "html5",
+    "MaterialDesign",
+    "UI_Design",
+    "web_design",
+    "Web_Development",
+    "webdev"
+  ],
+  "security_and_networking": [
+    "AskNetsec",
+    "computerforensics",
+    "crypto",
+    "networking"
+  ],
+  "browsers": [
+    "brave_browser",
+    "browsers",
+    "chrome",
+    "chrome_extensions",
+    "Firefox",
+    "FireFoxAddons",
+    "LibreWolf",
+    "operabrowser",
+    "safari"
+  ],
+  "hardware_and_iot": [
+    "arduino",
+    "embedded",
+    "internetofthings",
+    "IOT",
+    "raspberry_pi"
+  ],
+  "culture_and_humor": [
+    "dailyprogrammer",
+    "epochfail",
+    "hackernews",
+    "itsaunixsystem",
+    "linuxmemes",
+    "ProgrammerHumor",
+    "programmerreactions",
+    "softwaregore",
+    "unixporn",
+    "WatchPeopleCode"
+  ],
+  "general_dev_learning": [
+    "coding",
+    "coolgithubprojects",
+    "LaTeX",
+    "learnprogramming",
+    "opensource",
+    "programming",
+    "ProgrammingLanguages",
+    "regex",
+    "reviewmycode",
+    "softwaredevelopment",
+    "tinycode"
+  ]
+}
