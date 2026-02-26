@@ -7,20 +7,17 @@ import Container from "@mui/material/Container";
 import { useEffect } from "react";
 import { TopicBadge } from "./TopicBadge";
 import { useUserStore } from "@/store/UserStore";
+import { Tooltip } from "@mui/material";
+import { TOPIC_DETAILS } from "@/constants/topics";
 
 function NavBar() {
-  let userTopics: string[];
-
   const { user } = useUserStore();
 
-  if (user) {
-    //console.log(user)
-    userTopics = user.topics;
-  }
-
   useEffect(() => {
-    console.log("users topics", userTopics);
-  }, [userTopics]);
+    if (user?.topics) {
+      console.log("users topics", user.topics);
+    }
+  }, [user?.topics]);
 
   const addTopic = () => {
     alert("Add topic clicked");
@@ -34,7 +31,7 @@ function NavBar() {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -47,18 +44,30 @@ function NavBar() {
           >
             Doom.Dev
           </Typography>
+
           {user?.topics && (
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                gap: 1,
-              }}
-            >
-              {user?.topics?.map((topic) => (
-                <TopicBadge topic={topic} key={topic} />
-              ))}
-              <TopicBadge topic="+" onClick={addTopic} />
+            <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
+              {user.topics.map((topic) => {
+                const details =
+                  TOPIC_DETAILS[topic as keyof typeof TOPIC_DETAILS];
+
+                return (
+                  <Tooltip
+                    key={topic}
+                    title={details?.description || "No description available"}
+                    arrow
+                  >
+                    <div>
+                      <TopicBadge topic={topic} />
+                    </div>
+                  </Tooltip>
+                );
+              })}
+              <Tooltip title={"Add a new topic to your interests"} arrow>
+                <div>
+                  <TopicBadge topic="+" onClick={addTopic} />
+                </div>
+              </Tooltip>
             </Box>
           )}
         </Toolbar>
@@ -66,4 +75,5 @@ function NavBar() {
     </AppBar>
   );
 }
+
 export default NavBar;
