@@ -1,12 +1,18 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Get, Query } from '@nestjs/common';
+import { PostsService } from './posts/posts.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private postsService: PostsService) {}
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  async getPosts(@Query('tags') tags?: string[]) {
+    return this.postsService.find(tags);
+    //return 'Test reload';
+  }
+
+  @Get('/post')
+  async showPosts() {
+    return this.postsService.showUserPosts();
   }
 }

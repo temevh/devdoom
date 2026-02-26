@@ -8,8 +8,6 @@ export default defineConfig({
     seed: 'tsx prisma/seed.ts',
   },
   datasource: {
-    url:
-      process.env['DATABASE_URL'] ??
-      'postgresql://postgres:postgres@localhost:5432/doomdev_db?schema=public',
+    url: 'postgresql://postgres:postgres@db:5432/doomdev_db?schema=public',
   },
 });

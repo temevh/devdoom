@@ -1,6 +1,6 @@
-import { PrismaClient, Source } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { Pool } from 'pg';
+import { PrismaClient, Source, Topics } from '@prisma/client';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
@@ -156,6 +156,19 @@ async function main() {
     });
     console.log(`✅ Created post: ${post.title}`);
   }
+
+  const mockUser = {
+    email: 'tester@test.mail',
+    topics: [Topics.productivity, Topics.ai, Topics.coding],
+  };
+
+  const user = await prisma.user.upsert({
+    where: { email: mockUser.email },
+    update: {},
+    create: mockUser,
+  });
+
+  console.log(`✅ Created User: ${user.email}`);
 
   console.log('🚀 Seeding complete!');
 }

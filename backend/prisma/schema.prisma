@@ -20,7 +20,7 @@ model Post {
   id        Int      @id @default(autoincrement())
   title     String
   source    Source
-  url       String
+  url       String   @unique
   tags      String[]
   createdAt DateTime @default(now())
 }
@@ -28,4 +28,17 @@ model Post {
 enum Source {
   reddit
   medium
+  hackernews
+}
+
+model User {
+  id     Int      @id @default(autoincrement())
+  email  String   @unique
+  topics Topics[]
+}
+
+enum Topics {
+  ai
+  coding
+  productivity
 }
