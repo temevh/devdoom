@@ -19,5 +19,9 @@ export const useUserStore = create<UserState>((set) => ({
         localStorage.removeItem('token');
         set({user: null, isAuthenticated: false, isLoading: false})
     },
+    logIn: () => {
+        localStorage.setItem('token', "dev-token");
+        set({isAuthenticated: true, isLoading: false})
+    },
     setLoading: (loading) => set({isLoading: loading})
 }))

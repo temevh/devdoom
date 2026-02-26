@@ -6,28 +6,32 @@ import { GetUser } from "@/app/api/user";
 export const AppWrapper = ({children}: {children: React.ReactNode}) => {
     const {setUser, setLoading, isLoading} = useUserStore();
 
-    useEffect(() => {
-        const initializeUser = async () => {
-            const token = localStorage.getItem('token');
+   useEffect(() => {
+    const initializeUser = async () => {
+        console.log("🛠️ initializeUser started");
+        const token = localStorage.getItem('token');
+        console.log("🔑 Token found:", token ? "YES" : "NO");
 
-            if (!token){
-                setLoading(false)
-                return;
-            }
-
-            try {
-                const response   = await GetUser();
-                console.log(response)
-            } catch(error){
-                console.error("Session expired");
-                localStorage.removeItem('token')
-                setLoading(false)
-            }
+        if (!token) {
+            console.log("⚠️ No token, stopping initialization");
+            setLoading(false);
+            return;
         }
 
-        initializeUser();
+        try {
+            console.log("📡 Sending request to backend...");
+            const response = await GetUser();
+            console.log("✅ Response received:", response.data);
+            setUser(response.data);
+        } catch (error: any) {
+            console.error("❌ Fetch failed:", error.response?.data || error.message);
+            localStorage.removeItem('token');
+            setLoading(false);
+        }
+    };
 
-    }, [setUser, setLoading])
+    initializeUser();
+}, [setUser, setLoading]);
 
     if(isLoading){
         return <p>LOADING.. ADD FULLSCREEN LOADER</p>
