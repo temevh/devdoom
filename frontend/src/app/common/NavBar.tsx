@@ -7,12 +7,13 @@ import Container from "@mui/material/Container";
 import { useEffect, useState } from "react";
 import { TopicBadge } from "./TopicBadge";
 import { useUserStore } from "@/store/UserStore";
-import { AddTopics } from "../api/user";
 import { Tooltip } from "@mui/material";
-import { GetTopics } from "../api/topics";
+import { GetTopics, AddTopics } from "../api/topics";
+import { useQueryClient } from "@tanstack/react-query";
 
 function NavBar() {
-  const { user } = useUserStore();
+  const { user, setTopics } = useUserStore();
+  const queryClient = useQueryClient();
   const [allTopics, setAllTopics] = useState([]);
 
   useEffect(() => {
@@ -31,6 +32,11 @@ function NavBar() {
 
   const addTopic = async () => {
     const response = await AddTopics(["frontend", "devops"]);
+    if (response.data.topics) {
+      setTopics(response.data.topics);
+    }
+
+    queryClient.invalidateQueries({ queryKey: ["topics"] });
     console.log("response", response);
   };
 

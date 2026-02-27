@@ -4,9 +4,3 @@ import axios from "axios";
 export function GetUser() {
   return axios.get<User>("http://localhost:5000/user");
 }
-
-export function AddTopics(topics) {
-  return axios.patch("http://localhost:5000/user/topics", {
-    topics: topics,
-  });
-}

@@ -1,27 +1,32 @@
 import { User } from "@/app/types";
-import {create } from "zustand"
+import { create } from "zustand";
 
 interface UserState {
-    user: {email: string, topics: string[]} | null;
-    isAuthenticated: boolean,
-    isLoading: boolean;
-    setUser: (user: User) => void;
-    logOut: () => void;
-    setLoading: (loading: boolean) => void;
+  user: { email: string; topics: string[] } | null;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  setUser: (user: User) => void;
+  setTopics: (topics: string[]) => void;
+  logOut: () => void;
+  setLoading: (loading: boolean) => void;
 }
 
 export const useUserStore = create<UserState>((set) => ({
-    user: null,
-    isAuthenticated: false,
-    isLoading: true,
-    setUser: (user) => set({user, isAuthenticated: !!user, isLoading: false}),
-    logOut: () => {
-        localStorage.removeItem('token');
-        set({user: null, isAuthenticated: false, isLoading: false})
-    },
-    logIn: () => {
-        localStorage.setItem('token', "dev-token");
-        set({isAuthenticated: true, isLoading: false})
-    },
-    setLoading: (loading) => set({isLoading: loading})
-}))
+  user: null,
+  isAuthenticated: false,
+  isLoading: true,
+  setUser: (user) => set({ user, isAuthenticated: !!user, isLoading: false }),
+  setTopics: (topics) =>
+    set((state) => ({
+      user: state.user ? { ...state.user, topics } : null,
+    })),
+  logOut: () => {
+    localStorage.removeItem("token");
+    set({ user: null, isAuthenticated: false, isLoading: false });
+  },
+  logIn: () => {
+    localStorage.setItem("token", "dev-token");
+    set({ isAuthenticated: true, isLoading: false });
+  },
+  setLoading: (loading) => set({ isLoading: loading }),
+}));
