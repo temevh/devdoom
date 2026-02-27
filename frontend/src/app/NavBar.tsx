@@ -4,12 +4,13 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { useEffect } from "react";
-import { TopicBadge } from "./TopicBadge";
+import { useEffect, useState } from "react";
+import { TopicBadge, TopicPicker } from "./components/";
 import { useUserStore } from "@/store/UserStore";
 import { Tooltip } from "@mui/material";
-import { GetTopics, AddTopics } from "../api/topics";
+import { GetTopics, AddTopics } from "./api/topics";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import CommonModal from "./common/CommonModal";
 
 function NavBar() {
   const { user, setTopics } = useUserStore();
@@ -31,7 +32,7 @@ function NavBar() {
 
   const addTopic = async () => {
     try {
-      const response = await AddTopics(["data_science_and_ai"]);
+      const response = await AddTopics(["browsers", "backend"]);
 
       if (response.data && response.data.topics) {
         setTopics(response.data.topics);
@@ -43,13 +44,10 @@ function NavBar() {
     }
   };
 
-  useEffect(() => {
-    console.log("aLLtOPICS", allTopics);
-  }, [allTopics]);
+  const [modalOpen, setModalOpen] = useState(false);
 
-  useEffect(() => {
-    console.log("userTopics", user?.topics);
-  }, [user?.topics]);
+  const handleOpenModal = () => setModalOpen(true);
+  const handleCloseModal = () => setModalOpen(false);
 
   return (
     <AppBar position="static">
@@ -90,12 +88,17 @@ function NavBar() {
               })}
               <Tooltip title={"Add a new topic to your interests"} arrow>
                 <div>
-                  <TopicBadge topic="+" onClick={addTopic} />
+                  <TopicBadge topic="+" onClick={handleOpenModal} />
                 </div>
               </Tooltip>
             </Box>
           )}
         </Toolbar>
+        {modalOpen && (
+          <CommonModal handleClose={handleCloseModal}>
+            <TopicPicker topics={allTopics} />
+          </CommonModal>
+        )}
       </Container>
     </AppBar>
   );
