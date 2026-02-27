@@ -4,40 +4,43 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { TopicBadge } from "./TopicBadge";
 import { useUserStore } from "@/store/UserStore";
 import { Tooltip } from "@mui/material";
 import { GetTopics, AddTopics } from "../api/topics";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 function NavBar() {
   const { user, setTopics } = useUserStore();
   const queryClient = useQueryClient();
-  const [allTopics, setAllTopics] = useState([]);
+  const {
+    data: allTopics = [],
+    status,
+    error,
+  } = useQuery({
+    queryKey: ["topics"],
+    queryFn: GetTopics,
+    select: (res) => res.data,
+  });
 
   useEffect(() => {
-    const fetchTopics = async () => {
-      try {
-        const data = await GetTopics();
-        setAllTopics(data.data);
-        console.log("Fetched AllTopics:", data);
-      } catch (err) {
-        console.error("Failed to fetch topics:", err);
-      }
-    };
-
-    fetchTopics();
-  }, []);
+    if (status === "error") console.error("Query Error:", error);
+    if (status === "pending") console.log("Loading topics...");
+  }, [status, error]);
 
   const addTopic = async () => {
-    const response = await AddTopics(["frontend", "devops"]);
-    if (response.data.topics) {
-      setTopics(response.data.topics);
-    }
+    try {
+      const response = await AddTopics(["data_science_and_ai"]);
 
-    queryClient.invalidateQueries({ queryKey: ["topics"] });
-    console.log("response", response);
+      if (response.data && response.data.topics) {
+        setTopics(response.data.topics);
+      }
+
+      queryClient.invalidateQueries({ queryKey: ["topics"] });
+    } catch (err) {
+      console.error("Failed to add topics:", err);
+    }
   };
 
   useEffect(() => {

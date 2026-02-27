@@ -4,8 +4,6 @@ export function GetTopics() {
   return axios.get("http://localhost:5000/topic-resource");
 }
 
-export function AddTopics(topics) {
-  return axios.patch("http://localhost:5000/user/topics", {
-    topics: topics,
-  });
+export function AddTopics(topicsArray: string[]) {
+  return axios.patch("http://localhost:5000/user/topics", topicsArray);
 }

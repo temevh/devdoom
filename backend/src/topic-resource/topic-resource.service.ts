@@ -7,6 +7,7 @@ export class TopicResourceService {
 
   async getTopics() {
     const topics = await this.prisma.topic.findMany();
+    console.log("serving topics");
     return topics;
   }
 }

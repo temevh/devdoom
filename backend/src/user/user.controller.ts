@@ -20,7 +20,7 @@ export class UserController {
 
   @Patch("topics")
   @HttpCode(HttpStatus.OK)
-  async addTopics(@Body() body: { topics: Topics[] }) {
-    await this.userService.addTopics({ topics: body.topics });
+  async addTopics(@Body() topics: Topics[]) {
+    return await this.userService.addTopics({ topics });
   }
 }
