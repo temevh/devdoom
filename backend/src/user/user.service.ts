@@ -1,4 +1,5 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { Topics } from "@prisma/client";
 import { PrismaService } from "prisma/prisma.service";
 
 @Injectable()
@@ -9,5 +10,22 @@ export class UserService {
     const user = await this.prisma.user.findFirst();
     console.log("user", user);
     return user;
+  }
+
+  async addTopics({ topics }: { topics: Topics[] }) {
+    console.log("New topics array:", topics);
+
+    const user = await this.prisma.user.findUnique({
+      where: { id: 1 },
+    });
+
+    if (!user) {
+      throw new NotFoundException("User not found");
+    }
+    const updatedTopics = Array.from(new Set([...user.topics, ...topics]));
+    return this.prisma.user.update({
+      where: { id: 1 },
+      data: { topics: { set: updatedTopics } },
+    });
   }
 }

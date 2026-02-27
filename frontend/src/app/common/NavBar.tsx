@@ -4,27 +4,43 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { TopicBadge } from "./TopicBadge";
 import { useUserStore } from "@/store/UserStore";
+import { AddTopics } from "../api/user";
+import { Tooltip } from "@mui/material";
+import { GetTopics } from "../api/topics";
 
 function NavBar() {
-  let userTopics: string[];
-
   const { user } = useUserStore();
-
-  if (user) {
-    //console.log(user)
-    userTopics = user.topics;
-  }
+  const [allTopics, setAllTopics] = useState([]);
 
   useEffect(() => {
-    console.log("users topics", userTopics);
-  }, [userTopics]);
+    const fetchTopics = async () => {
+      try {
+        const data = await GetTopics();
+        setAllTopics(data.data);
+        console.log("Fetched AllTopics:", data);
+      } catch (err) {
+        console.error("Failed to fetch topics:", err);
+      }
+    };
 
-  const addTopic = () => {
-    alert("Add topic clicked");
+    fetchTopics();
+  }, []);
+
+  const addTopic = async () => {
+    const response = await AddTopics(["frontend", "devops"]);
+    console.log("response", response);
   };
+
+  useEffect(() => {
+    console.log("aLLtOPICS", allTopics);
+  }, [allTopics]);
+
+  useEffect(() => {
+    console.log("userTopics", user?.topics);
+  }, [user?.topics]);
 
   return (
     <AppBar position="static">
@@ -48,17 +64,26 @@ function NavBar() {
             Doom.Dev
           </Typography>
           {user?.topics && (
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                gap: 1,
-              }}
-            >
-              {user?.topics?.map((topic) => (
-                <TopicBadge topic={topic} key={topic} />
-              ))}
-              <TopicBadge topic="+" onClick={addTopic} />
+            <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
+              {user.topics.map((userTopic) => {
+                const topicData = allTopics.find((t) => t.name === userTopic);
+                return (
+                  <Tooltip
+                    key={userTopic}
+                    title={topicData?.description || "No description available"}
+                    arrow
+                  >
+                    <div>
+                      <TopicBadge topic={userTopic} />
+                    </div>
+                  </Tooltip>
+                );
+              })}
+              <Tooltip title={"Add a new topic to your interests"} arrow>
+                <div>
+                  <TopicBadge topic="+" onClick={addTopic} />
+                </div>
+              </Tooltip>
             </Box>
           )}
         </Toolbar>

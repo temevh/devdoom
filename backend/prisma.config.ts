@@ -10,6 +10,6 @@ export default defineConfig({
   datasource: {
     url:
       process.env.DATABASE_URL ||
-      "postgresql://postgres:postgres@localhost:5433/doomdev_db?schema=public",
+      "postgresql://postgres:postgres@db:5432/doomdev_db?schema=public",
   },
 });

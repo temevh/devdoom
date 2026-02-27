@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'prisma/prisma.service';
-import { RedisService } from 'redis/redis.service';
-import { RedditService } from 'src/reddit/reddit.service';
-import { UserService } from 'src/user/user.service';
-import { User, Post } from '@prisma/client';
+import { Injectable } from "@nestjs/common";
+import { PrismaService } from "prisma/prisma.service";
+import { RedisService } from "redis/redis.service";
+import { RedditService } from "src/reddit/reddit.service";
+import { UserService } from "src/user/user.service";
+import { User, Post } from "@prisma/client";
 
 @Injectable()
 export class PostsService {
@@ -21,12 +21,12 @@ export class PostsService {
 
     const cacheKey =
       cleanTags.length > 0
-        ? `posts_tags:${cleanTags.sort().join(',')}`
-        : 'posts_all';
+        ? `posts_tags:${cleanTags.sort().join(",")}`
+        : "posts_all";
 
     const cachedPosts = await this.redis.get(cacheKey);
     if (cachedPosts) {
-      console.log('⚡ Serving multi-tag results from cache');
+      console.log("⚡ Serving multi-tag results from cache");
       return JSON.parse(cachedPosts);
     }
 
@@ -35,7 +35,7 @@ export class PostsService {
 
     const posts = await this.prisma.post.findMany({
       where: whereClause,
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: "desc" },
     });
 
     await this.redis.set(cacheKey, JSON.stringify(posts), 1800);
@@ -45,7 +45,7 @@ export class PostsService {
   async showUserPosts() {
     const user: User | null = await this.userService.getUser();
     if (!user) {
-      console.log('User not found');
+      console.log("User not found");
       return [];
     }
 
@@ -66,7 +66,7 @@ export class PostsService {
     if (getFromDb.length > 0) {
       const dbPosts = await this.prisma.post.findMany({
         where: { tags: { hasSome: getFromDb } },
-        orderBy: { createdAt: 'desc' },
+        orderBy: { createdAt: "desc" },
       });
 
       await this.backFillCache(getFromDb, dbPosts);
