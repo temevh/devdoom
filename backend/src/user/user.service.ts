@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'prisma/prisma.service';
+import { Injectable } from "@nestjs/common";
+import { PrismaService } from "prisma/prisma.service";
 
 @Injectable()
 export class UserService {
@@ -7,7 +7,7 @@ export class UserService {
 
   async getUser() {
     const user = await this.prisma.user.findFirst();
-    console.log('user', user);
+    console.log("user", user);
     return user;
   }
 }
