@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -19,7 +20,13 @@ export class UserController {
 
   @Patch("topics")
   @HttpCode(HttpStatus.OK)
-  async addTopics(@Body('topic') topic: string) {
+  async addTopics(@Body("topic") topic: string) {
     return await this.userService.addTopics(topic);
+  }
+
+  @Delete("topics")
+  @HttpCode(HttpStatus.ACCEPTED)
+  async removeTopic(@Body("topic") topic: string) {
+    return await this.userService.removeTopic(topic);
   }
 }

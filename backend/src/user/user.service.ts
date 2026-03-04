@@ -11,11 +11,11 @@ export class UserService {
     return user;
   }
 
-  async addTopics( topic ) {
+  async addTopics(topic) {
     const user = await this.prisma.user.findUnique({
       where: { id: 1 },
     });
-    console.log(topic)
+    console.log(topic);
 
     if (!user) throw new NotFoundException("User not found");
 
@@ -23,6 +23,26 @@ export class UserService {
     return this.prisma.user.update({
       where: { id: 1 },
       data: { topics: { set: updatedTopics } },
+    });
+  }
+
+  async removeTopic(topic) {
+    const user = await this.prisma.user.findUnique({
+      where: { id: 1 },
+    });
+    console.log(topic);
+    if (!user) throw new NotFoundException("User not found");
+    const prevTopics = user.topics;
+    console.log("prevTopics", prevTopics);
+    const idx = prevTopics.indexOf(topic);
+    if (idx > -1) {
+      console.log("removing", topic);
+      prevTopics.splice(idx, 1);
+    }
+    console.log("topic removed", prevTopics);
+    return this.prisma.user.update({
+      where: { id: 1 },
+      data: { topics: prevTopics },
     });
   }
 }

@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { TopicBadge, TopicPicker } from "./components/";
 import { useUserStore } from "@/store/UserStore";
 import { Tooltip } from "@mui/material";
-import { GetTopics, AddTopics } from "./api/topics";
+import { GetTopics, AddTopic, RemoveTopic } from "./api/topics";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import CommonModal from "./common/CommonModal";
 
@@ -36,11 +36,14 @@ function NavBar() {
   const handleOpenModal = () => setModalOpen(true);
   const handleCloseModal = () => setModalOpen(false);
 
-
-
   async function topicPressed(topic) {
     try {
-      const response = await AddTopics(topic)
+      let response;
+      if (user?.topics.includes(topic)) {
+        response = await RemoveTopic(topic)
+      } else {
+        response = await AddTopic(topic)
+      }
 
       if (response.status === 200) {
         if (user) {
