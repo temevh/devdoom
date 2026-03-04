@@ -36,25 +36,34 @@ function NavBar() {
   const handleOpenModal = () => setModalOpen(true);
   const handleCloseModal = () => setModalOpen(false);
 
-  async function topicPressed(topic) {
+  const userTopics = user?.topics;
+
+  useEffect(() => {
+    console.log("userTopics", userTopics)
+  }, [userTopics])
+
+  async function topicPressed(topicName: string) {
     try {
+      const isRemoving = user?.topics.includes(topicName);
       let response;
-      if (user?.topics.includes(topic)) {
-        response = await RemoveTopic(topic)
+
+      if (isRemoving) {
+        response = await RemoveTopic(topicName);
       } else {
-        response = await AddTopic(topic)
+        response = await AddTopic(topicName);
       }
 
-      if (response.status === 200) {
-        if (user) {
-          setTopics([...user.topics, topic])
-        }
+      if (response.status === 200 && user) {
+        const updatedTopics = isRemoving
+          ? user.topics.filter((t) => t !== topicName)
+          : [...user.topics, topicName];
+
+        setTopics(updatedTopics);
       }
 
       queryClient.invalidateQueries({ queryKey: ["user"] });
-      console.log("✅ Topic added and user refetched");
     } catch (err) {
-      console.error("❌ Failed to add topic:", err);
+      console.error("❌ Failed to toggle topic:", err);
     }
   }
 
@@ -125,7 +134,7 @@ function NavBar() {
                     textAlign: "center",
                   }}
                 >
-                  <TopicBadge topic={topic.name} topicPressed={topicPressed} editing />
+                  <TopicBadge topic={topic.name} topicPressed={topicPressed} editing selected={userTopics?.includes(topic.name)} />
                 </div>
               ))}
             </div>
