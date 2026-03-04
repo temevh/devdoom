@@ -7,7 +7,6 @@ import {
   Patch,
 } from "@nestjs/common";
 import { UserService } from "./user.service";
-import { Topics } from "@prisma/client";
 
 @Controller("user")
 export class UserController {
@@ -20,7 +19,7 @@ export class UserController {
 
   @Patch("topics")
   @HttpCode(HttpStatus.OK)
-  async addTopics(@Body() topics: Topics[]) {
-    return await this.userService.addTopics({ topics });
+  async addTopics(@Body('topic') topic: string) {
+    return await this.userService.addTopics(topic);
   }
 }

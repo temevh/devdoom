@@ -3,15 +3,17 @@ import { colors } from "../styles";
 
 export const TopicBadge = ({
   topic,
-  onClick,
+  topicPressed,
+  editing,
 }: {
   topic: string;
-  onClick?: () => void;
+  topicPressed?: (topic: string) => void;
+  editing?: boolean
 }) => {
   return (
     <Card
       variant="outlined"
-      onClick={onClick}
+      onClick={() => {topicPressed(topic)}}
       style={{
         height: 40,
         minWidth: 40,
@@ -26,7 +28,7 @@ export const TopicBadge = ({
         color: colors.primary.contrastText,
         fontWeight: "bold",
         fontSize: topic === "+" ? 24 : 16,
-        cursor: onClick ? "pointer" : "default",
+        cursor: topicPressed && editing ? "pointer" : "default",
         borderRadius: 4,
       }}
     >

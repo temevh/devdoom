@@ -30,24 +30,30 @@ function NavBar() {
     if (status === "pending") console.log("Loading topics...");
   }, [status, error]);
 
-  const addTopic = async () => {
-    try {
-      const response = await AddTopics(["browsers", "backend"]);
-
-      if (response.data && response.data.topics) {
-        setTopics(response.data.topics);
-      }
-
-      queryClient.invalidateQueries({ queryKey: ["topics"] });
-    } catch (err) {
-      console.error("Failed to add topics:", err);
-    }
-  };
 
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleOpenModal = () => setModalOpen(true);
   const handleCloseModal = () => setModalOpen(false);
+
+
+
+  async function topicPressed(topic) {
+    try {
+      const response = await AddTopics(topic)
+
+      if (response.status === 200) {
+        if (user) {
+          setTopics([...user.topics, topic])
+        }
+      }
+
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+      console.log("✅ Topic added and user refetched");
+    } catch (err) {
+      console.error("❌ Failed to add topic:", err);
+    }
+  }
 
   return (
     <AppBar position="static">
@@ -88,7 +94,7 @@ function NavBar() {
               })}
               <Tooltip title={"Add a new topic to your interests"} arrow>
                 <div>
-                  <TopicBadge topic="+" onClick={handleOpenModal} />
+                  <TopicBadge topic="+" onClick={handleOpenModal} editing topicPressed={handleOpenModal} />
                 </div>
               </Tooltip>
             </Box>
@@ -96,7 +102,30 @@ function NavBar() {
         </Toolbar>
         {modalOpen && (
           <CommonModal handleClose={handleCloseModal}>
-            <TopicPicker topics={allTopics} />
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "12px",
+                padding: "1rem",
+                justifyContent: "center",
+              }}
+            >
+              {allTopics.map((topic) => (
+                <div
+                  key={topic.name}
+                  style={{
+                    height: 30,
+                    lineHeight: 30,
+
+                    margin: "0 4px 4px 0",
+                    textAlign: "center",
+                  }}
+                >
+                  <TopicBadge topic={topic.name} topicPressed={topicPressed} editing />
+                </div>
+              ))}
+            </div>
           </CommonModal>
         )}
       </Container>
