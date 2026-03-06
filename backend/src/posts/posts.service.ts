@@ -72,6 +72,8 @@ export class PostsService {
       await this.backFillCache(getFromDb, dbPosts);
     }
 
+    console.log(posts);
+
     return posts;
   }
 

@@ -1,2 +1,3 @@
 import { TopicBadge } from "./TopicBadge";
-export {  TopicBadge };
+import { PostCard } from "./PostCard";
+export { TopicBadge, PostCard };

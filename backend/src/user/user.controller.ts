@@ -19,10 +19,6 @@ export class UserController {
   }
 
   @Patch("topics")
-<<<<<<< HEAD
-  updateTopics(@Request() req, @Body() body: { topics: string[] }) {
-    console.log(`Updating topics for user`, body.topics);
-=======
   @HttpCode(HttpStatus.OK)
   async addTopics(@Body("topic") topic: string) {
     return await this.userService.addTopics(topic);
@@ -32,6 +28,5 @@ export class UserController {
   @HttpCode(HttpStatus.ACCEPTED)
   async removeTopic(@Body("topic") topic: string) {
     return await this.userService.removeTopic(topic);
->>>>>>> ed31cd5eb5f3aafcb8d992aa4f1224451f95890f
   }
 }

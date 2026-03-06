@@ -5,7 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useEffect, useState } from "react";
-import { TopicBadge, TopicPicker } from "./components/";
+import { TopicBadge } from "./components/";
 import { useUserStore } from "@/store/UserStore";
 import { Tooltip } from "@mui/material";
 import { GetTopics, AddTopic, RemoveTopic } from "./api/topics";
@@ -30,7 +30,6 @@ function NavBar() {
     if (status === "pending") console.log("Loading topics...");
   }, [status, error]);
 
-
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleOpenModal = () => setModalOpen(true);
@@ -39,8 +38,8 @@ function NavBar() {
   const userTopics = user?.topics;
 
   useEffect(() => {
-    console.log("userTopics", userTopics)
-  }, [userTopics])
+    console.log("userTopics", userTopics);
+  }, [userTopics]);
 
   async function topicPressed(topicName: string) {
     try {
@@ -106,7 +105,12 @@ function NavBar() {
               })}
               <Tooltip title={"Add a new topic to your interests"} arrow>
                 <div>
-                  <TopicBadge topic="+" onClick={handleOpenModal} editing topicPressed={handleOpenModal} />
+                  <TopicBadge
+                    topic="+"
+                    onClick={handleOpenModal}
+                    editing
+                    topicPressed={handleOpenModal}
+                  />
                 </div>
               </Tooltip>
             </Box>
@@ -134,7 +138,12 @@ function NavBar() {
                     textAlign: "center",
                   }}
                 >
-                  <TopicBadge topic={topic.name} topicPressed={topicPressed} editing selected={userTopics?.includes(topic.name)} />
+                  <TopicBadge
+                    topic={topic.name}
+                    topicPressed={topicPressed}
+                    editing
+                    selected={userTopics?.includes(topic.name)}
+                  />
                 </div>
               ))}
             </div>

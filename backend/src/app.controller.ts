@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Patch, Query } from "@nestjs/common";
+import { Controller, Get, Query } from "@nestjs/common";
 import { PostsService } from "./posts/posts.service";
 
 @Controller()
@@ -8,7 +8,6 @@ export class AppController {
   @Get()
   async getPosts(@Query("tags") tags?: string[]) {
     return this.postsService.find(tags);
-    //return 'Test reload';
   }
 
   @Get("/post")
