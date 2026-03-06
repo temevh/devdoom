@@ -1,43 +1,27 @@
-"use client"
+"use client";
 import { useEffect } from "react";
 import { useUserStore } from "@/store/UserStore";
 import { GetUser } from "@/app/api/user";
+import { useQuery } from "@tanstack/react-query";
 
-export const AppWrapper = ({children}: {children: React.ReactNode}) => {
-    const {setUser, setLoading, isLoading} = useUserStore();
+export const AppWrapper = ({ children }: { children: React.ReactNode }) => {
+  const { setUser, setLoading, isLoading: storeLoading } = useUserStore();
+  const { data: userData, isLoading: queryLoading, isSuccess } = useQuery({
+    queryKey: ["user"], queryFn: GetUser, enabled: typeof window !== "undefined" && !!localStorage.getItem("token"),
+    select: (res) => res.data,
+  })
 
-   useEffect(() => {
-    const initializeUser = async () => {
-        console.log("🛠️ initializeUser started");
-        const token = localStorage.getItem('token');
-        console.log("🔑 Token found:", token ? "YES" : "NO");
-
-        if (!token) {
-            console.log("⚠️ No token, stopping initialization");
-            setLoading(false);
-            return;
-        }
-
-        try {
-            console.log("📡 Sending request to backend...");
-            const response = await GetUser();
-            console.log("✅ Response received:", response.data);
-            setUser(response.data);
-        } catch (error: any) {
-            console.error("❌ Fetch failed:", error.response?.data || error.message);
-            localStorage.removeItem('token');
-            setLoading(false);
-        }
-    };
-
-    initializeUser();
-}, [setUser, setLoading]);
-
-    if(isLoading){
-        return <p>LOADING.. ADD FULLSCREEN LOADER</p>
+  useEffect(() => {
+    console.log("flg 1")
+    if (isSuccess && userData) {
+      setUser(userData)
+      setLoading(false)
     }
+  }, [userData, isSuccess, setUser, setLoading]);
 
-    return <>{children}</>
+  if (queryLoading || storeLoading) {
+    return <p>LOADING.. ADD FULLSCREEN LOADER</p>;
+  }
 
-
-}
+  return <>{children}</>;
+};

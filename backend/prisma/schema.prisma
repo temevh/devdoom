@@ -18,6 +18,12 @@ model Post {
   createdAt DateTime @default(now())
 }
 
+model Topic {
+  id          Int    @id @default(autoincrement())
+  name        Topics
+  description String
+}
+
 enum Source {
   reddit
   medium
@@ -34,4 +40,26 @@ enum Topics {
   ai
   coding
   productivity
+  backend
+  frontend
+  mobile
+  devops
+  PHP
+  Python
+  Ruby
+  Javascript
+  low_level_and_systems
+  jvm_and_dotnet
+  functional_and_niche_langs
+  databases
+  os_and_platforms
+  terminal_and_shell
+  data_science_and_ai
+  cs_theory_and_career
+  web_design_and_ui
+  security_and_networking
+  browsers
+  hardware_and_iot
+  culture_and_humor
+  general_dev_learning
 }

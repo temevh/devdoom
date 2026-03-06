@@ -1,8 +1,8 @@
-import { HttpService } from '@nestjs/axios';
-import { Injectable, Logger } from '@nestjs/common';
-import { Cron, CronExpression } from '@nestjs/schedule';
-import { Source } from '@prisma/client';
-import { PrismaService } from 'prisma/prisma.service';
+import { HttpService } from "@nestjs/axios";
+import { Injectable, Logger } from "@nestjs/common";
+import { Cron, CronExpression } from "@nestjs/schedule";
+import { Source } from "@prisma/client";
+import { PrismaService } from "prisma/prisma.service";
 
 @Injectable()
 export class HackernewsService {
@@ -15,10 +15,10 @@ export class HackernewsService {
 
   @Cron(CronExpression.EVERY_2_HOURS)
   async syncHackerNews() {
-    this.logger.log('Starting HackerNews sync...');
+    this.logger.log("Starting HackerNews sync...");
 
     const { data: topIds } = await this.http.axiosRef.get<number[]>(
-      'https://hacker-news.firebaseio.com/v0/topstories.json',
+      "https://hacker-news.firebaseio.com/v0/topstories.json",
     );
 
     const top20 = topIds.slice(0, 20);
@@ -36,12 +36,12 @@ export class HackernewsService {
             title: story.title,
             url: story.url,
             source: Source.hackernews,
-            tags: ['hackernews', 'tech'],
+            tags: ["hackernews", "tech"],
             createdAt: new Date(story.time * 1000),
           },
         });
       }
     }
-    this.logger.log('Hackernews sync complete');
+    this.logger.log("Hackernews sync complete");
   }
 }
