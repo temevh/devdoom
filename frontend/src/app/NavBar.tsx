@@ -61,6 +61,7 @@ function NavBar() {
       }
 
       queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
     } catch (err) {
       console.error("❌ Failed to toggle topic:", err);
     }

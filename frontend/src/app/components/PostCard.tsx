@@ -1,5 +1,4 @@
 import {
-  Box,
   Card,
   CardActions,
   CardContent,
@@ -11,8 +10,9 @@ import {
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { colors } from "../styles";
+import { Post } from "../types";
 
-export const PostCard = ({ post }) => {
+export const PostCard = ({ post }: { post: Post }) => {
   return (
     <Card
       elevation={0}
@@ -96,7 +96,7 @@ export const PostCard = ({ post }) => {
             },
           }}
         >
-          View Source
+          View Post
         </Button>
       </CardActions>
     </Card>
