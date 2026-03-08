@@ -42,6 +42,12 @@ export class PostsService {
     return posts;
   }
 
+  async manualFetchReddit() {
+    await this.reddit.syncReddit().then(() => {
+      return true;
+    });
+  }
+
   async showUserPosts() {
     const user: User | null = await this.userService.getUser();
     if (!user) {
@@ -68,6 +74,8 @@ export class PostsService {
         where: { tags: { hasSome: getFromDb } },
         orderBy: { createdAt: "desc" },
       });
+
+      posts.push(...dbPosts);
 
       await this.backFillCache(getFromDb, dbPosts);
     }

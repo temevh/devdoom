@@ -9,4 +9,9 @@ export class PostsController {
   async getPosts(@Query("tags") tags?: string[]) {
     return this.postsService.find(tags);
   }
+
+  @Get("refresh")
+  async refreshPosts() {
+    return this.postsService.manualFetchReddit();
+  }
 }
