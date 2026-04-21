@@ -59,6 +59,7 @@ export class PostsService {
     const getFromDb: string[] = [];
 
     for (const topic of user.topics) {
+      console.log("topic", topic);
       const cacheKey = `posts_tag:${topic}`;
       const cachedPosts = await this.redis.get(cacheKey);
 
@@ -69,18 +70,24 @@ export class PostsService {
       }
     }
 
+    console.log("getFromDb", getFromDb);
     if (getFromDb.length > 0) {
       const dbPosts = await this.prisma.post.findMany({
-        where: { tags: { hasSome: getFromDb } },
+        where: {
+          tags: {
+            hasSome: getFromDb,
+          },
+        },
         orderBy: { createdAt: "desc" },
       });
 
+      console.log("dbPosts", dbPosts);
       posts.push(...dbPosts);
 
       await this.backFillCache(getFromDb, dbPosts);
     }
 
-    console.log(posts);
+    //console.log(posts);
 
     return posts;
   }
